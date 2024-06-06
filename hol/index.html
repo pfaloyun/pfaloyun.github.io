@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PFAL Oyun - HoL</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        .card {
+            font-size: 100px;
+            margin: 20px;
+        }
+        .buttons {
+            margin: 20px;
+        }
+        .buttons button {
+            font-size: 24px;
+            padding: 10px 20px;
+            margin: 10px;
+        }
+        .scoreboard {
+            font-size: 24px;
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>PFAL Oyun - HoL</h1>
+    <div class="card" id="currentCard">?</div>
+    <div class="buttons">
+        <button onclick="guess('higher')">Yukarı</button>
+        <button onclick="guess('lower')">Aşağı</button>
+    </div>
+    <div class="scoreboard">
+        <p>Oyuncu 1 Puan: <span id="player1Score">0</span></p>
+        <p>Oyuncu 2 Puan: <span id="player2Score">0</span></p>
+        <p>Mevcut Oyuncu: <span id="currentPlayer">1</span></p>
+        <p>Tur: <span id="round">1</span>/10</p>
+    </div>
+    <div id="message"></div>
+
+    <script>
+        const numRounds = 10;
+        let currentPlayer = 1;
+        let player1Score = 0;
+        let player2Score = 0;
+        let currentCard = Math.floor(Math.random() * 13) + 1;
+        let round = 1;
+
+        document.getElementById('currentCard').innerText = currentCard;
+
+        function guess(choice) {
+            let nextCard = Math.floor(Math.random() * 13) + 1;
+            let isCorrect = (choice === 'higher' && nextCard > currentCard) || (choice === 'lower' && nextCard < currentCard);
+            
+            if (isCorrect) {
+                if (currentPlayer === 1) {
+                    player1Score++;
+                } else {
+                    player2Score++;
+                }
+                document.getElementById('message').innerText = 'Doğru!';
+            } else {
+                document.getElementById('message').innerText = 'Yanlış!';
+            }
+
+            document.getElementById('currentCard').innerText = nextCard;
+            currentCard = nextCard;
+            updateScores();
+
+            if (round >= numRounds) {
+                endGame();
+            } else {
+                round++;
+                currentPlayer = currentPlayer === 1 ? 2 : 1;
+                updateRound();
+            }
+        }
+
+        function updateScores() {
+            document.getElementById('player1Score').innerText = player1Score;
+            document.getElementById('player2Score').innerText = player2Score;
+            document.getElementById('currentPlayer').innerText = currentPlayer;
+        }
+
+        function updateRound() {
+            document.getElementById('round').innerText = round;
+        }
+
+        function endGame() {
+            let winner = player1Score > player2Score ? 'Oyuncu 1 kazandı!' : (player2Score > player1Score ? 'Oyuncu 2 kazandı!' : 'Berabere!');
+            document.getElementById('message').innerText = winner;
+            document.querySelector('.buttons').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
