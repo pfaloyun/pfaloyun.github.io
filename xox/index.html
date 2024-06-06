@@ -61,7 +61,6 @@
         function play(row, col) {
             if (!gameOver && board[row][col] === '') {
                 board[row][col] = currentPlayer;
-                document.getElementById('message').textContent = `Player ${currentPlayer}'s turn`;
                 document.getElementById('message').style.color = '#000';
 
                 renderBoard();
