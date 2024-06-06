@@ -1,1 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2 Player Tic-Tac-Toe</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        .board {
+            display: inline-block;
+            border: 2px solid black;
+            margin: 20px;
+        }
+        .board button {
+            width: 100px;
+            height: 100px;
+            font-size: 24px;
+            cursor: pointer;
+            border: none;
+            background-color: #fff;
+        }
+        .board button:hover {
+            background-color: #f0f0f0;
+        }
+        .message {
+            font-size: 24px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>2 Player Tic-Tac-Toe</h1>
+    <div class="board">
+        <button onclick="play(0, 0)"></button>
+        <button onclick="play(0, 1)"></button>
+        <button onclick="play(0, 2)"></button>
+        <br>
+        <button onclick="play(1, 0)"></button>
+        <button onclick="play(1, 1)"></button>
+        <button onclick="play(1, 2)"></button>
+        <br>
+        <button onclick="play(2, 0)"></button>
+        <button onclick="play(2, 1)"></button>
+        <button onclick="play(2, 2)"></button>
+    </div>
+    <div class="message" id="message"></div>
 
+    <script>
+        let currentPlayer = 'X';
+        let board = [
+            ['', '', ''],
+            ['', '', ''],
+            ['', '', '']
+        ];
+        let gameOver = false;
+
+        function play(row, col) {
+            if (!gameOver && board[row][col] === '') {
+                board[row][col] = currentPlayer;
+                document.getElementById('message').textContent = `Player ${currentPlayer}'s turn`;
+                document.getElementById('message').style.color = '#000';
+
+                renderBoard();
+
+                if (checkWinner(currentPlayer)) {
+                    document.getElementById('message').textContent = `Player ${currentPlayer} wins!`;
+                    document.getElementById('message').style.color = 'green';
+                    gameOver = true;
+                } else if (checkDraw()) {
+                    document.getElementById('message').textContent = 'It\'s a draw!';
+                    document.getElementById('message').style.color = 'orange';
+                    gameOver = true;
+                } else {
+                    currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+                }
+            }
+        }
+
+        function renderBoard() {
+            let buttons = document.querySelectorAll('.board button');
+            for (let i = 0; i < buttons.length; i++) {
+                let row = Math.floor(i / 3);
+                let col = i % 3;
+                buttons[i].textContent = board[row][col];
+            }
+        }
+
+        function checkWinner(player) {
+            // Check rows, columns, and diagonals
+            for (let i = 0; i < 3; i++) {
+                if (board[i][0] === player && board[i][1] === player && board[i][2] === player) return true; // row
+                if (board[0][i] === player && board[1][i] === player && board[2][i] === player) return true; // col
+            }
+            if (board[0][0] === player && board[1][1] === player && board[2][2] === player) return true; // diagonal
+            if (board[0][2] === player && board[1][1] === player && board[2][0] === player) return true; // anti-diagonal
+            return false;
+        }
+
+        function checkDraw() {
+            for (let row of board) {
+                for (let cell of row) {
+                    if (cell === '') return false;
+                }
+            }
+            return true;
+        }
+    </script>
+</body>
+</html>
