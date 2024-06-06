@@ -38,13 +38,14 @@
     <div class="scoreboard">
         <p>Oyuncu 1 Puan: <span id="player1Score">0</span></p>
         <p>Oyuncu 2 Puan: <span id="player2Score">0</span></p>
+        <p>Mevcut Oyuncu: <span id="currentPlayer">2</span></p>
         <p>Tur: <span id="round">1</span>/10</p>
     </div>
     <div id="message"></div>
 
     <script>
         const numRounds = 10;
-        let currentPlayer = 1;
+        let currentPlayer = 2; // Başlangıçta Oyuncu 2 ile başlatın
         let player1Score = 0;
         let player2Score = 0;
         let currentCard = Math.floor(Math.random() * 13) + 1;
