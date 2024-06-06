@@ -36,9 +36,8 @@
         <button onclick="guess('lower')">Aşağı</button>
     </div>
     <div class="scoreboard">
-        <p>Oyuncu 1 Puan: <span id="player1Score">0</span></p>
-        <p>Oyuncu 2 Puan: <span id="player2Score">0</span></p>
-        <p>Mevcut Oyuncu: <span id="currentPlayer">2</span></p>
+        <p>Oyuncu 1 Puan: <span id="player2Score">0</span></p>
+        <p>Oyuncu 2 Puan: <span id="player1Score">0</span></p>
         <p>Tur: <span id="round">1</span>/10</p>
     </div>
     <div id="message"></div>
@@ -82,8 +81,8 @@
         }
 
         function updateScores() {
-            document.getElementById('player1Score').innerText = player1Score;
-            document.getElementById('player2Score').innerText = player2Score;
+            document.getElementById('player2Score').innerText = player1Score;
+            document.getElementById('player1Score').innerText = player2Score;
             document.getElementById('currentPlayer').innerText = currentPlayer;
         }
 
@@ -92,7 +91,7 @@
         }
 
         function endGame() {
-            let winner = player1Score > player2Score ? 'Oyuncu 1 kazandı!' : (player2Score > player1Score ? 'Oyuncu 2 kazandı!' : 'Berabere!');
+            let winner = player2Score > player1Score ? 'Oyuncu 1 kazandı!' : (player1Score > player2Score ? 'Oyuncu 2 kazandı!' : 'Berabere!');
             document.getElementById('message').innerText = winner;
             document.querySelector('.buttons').style.display = 'none';
         }
